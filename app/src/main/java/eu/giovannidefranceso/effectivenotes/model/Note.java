@@ -4,9 +4,12 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import org.parceler.Parcel;
+
 /**
  * Created by jibbo on 26/07/15.
  */
+@Parcel
 @Table(name = "Note")
 public class Note extends Model {
     @Column(name = "title")
@@ -17,4 +20,7 @@ public class Note extends Model {
     public Profile profile;
     @Column(name = "color")
     public String color;
+    @Column(name = "type")
+    public String type;
+
 }

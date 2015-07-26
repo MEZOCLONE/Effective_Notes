@@ -1,38 +1,56 @@
 package eu.giovannidefranceso.effectivenotes.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.activeandroid.query.Select;
+import org.parceler.Parcels;
 
+import java.util.List;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import eu.giovannidefranceso.effectivenotes.R;
+import eu.giovannidefranceso.effectivenotes.adapters.NotesAdapter;
 import eu.giovannidefranceso.effectivenotes.model.Note;
 
 /**
  * Created by jibbo on 26/07/15.
  */
-public class BoardFragment extends ListFragment {
+public class BoardFragment extends Fragment {
 
     public static final String KEY_TITLE = "title";
+    public static final String KEY_NOTES = "notes";
+
+    @Bind(R.id.recyclerview)
+    RecyclerView mRecyclerView;
 
     private String mTitle;
+    private List<Note> mNotes;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState!=null && savedInstanceState.containsKey(KEY_TITLE)){
-            mTitle = savedInstanceState.getString(KEY_TITLE);
-        }else if( getArguments()!=null && getArguments().containsKey(KEY_TITLE)){
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(KEY_TITLE)) {
+                mTitle = savedInstanceState.getString(KEY_TITLE);
+            }
+            if (savedInstanceState.containsKey(KEY_NOTES)) {
+                mNotes = Parcels.unwrap(savedInstanceState.getParcelable(KEY_NOTES));
+            }
+        } else if (getArguments() != null && getArguments().containsKey(KEY_TITLE)) {
             mTitle = getArguments().getString(KEY_TITLE);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View out = super.onCreateView(inflater, container, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View out = inflater.inflate(R.layout.fragment_board, container, false);
         ButterKnife.bind(this, out);
         return out;
     }
@@ -40,7 +58,10 @@ public class BoardFragment extends ListFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (mTitle != null) {
-            outState.putString(KEY_TITLE,mTitle);
+            outState.putString(KEY_TITLE, mTitle);
+        }
+        if (mNotes != null) {
+            outState.putParcelable(KEY_NOTES, Parcels.wrap(mNotes));
         }
         super.onSaveInstanceState(outState);
     }
@@ -48,6 +69,14 @@ public class BoardFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (mNotes == null) {
+            if (mTitle != null) {
+                mNotes = new Select().from(Note.class).where("type=? ", mTitle).execute();
+            }
+        }
+        if (mNotes != null) {
+            mRecyclerView.setAdapter(new NotesAdapter(mNotes));
+        }
     }
 
     public static BoardFragment newInstance(String title) {

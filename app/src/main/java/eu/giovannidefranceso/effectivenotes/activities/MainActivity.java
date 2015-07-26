@@ -2,6 +2,7 @@ package eu.giovannidefranceso.effectivenotes.activities;
 
 import java.util.Locale;
 
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,7 +46,8 @@ public class MainActivity extends AppCompatActivity{
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
-        mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
+        mViewPager.setAdapter(new SectionsPagerAdapter(this,R.array.sections,
+                getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
 
     }
