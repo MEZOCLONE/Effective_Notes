@@ -15,4 +15,6 @@ public class Note extends Model {
     public String content;
     @Column(name = "profile")
     public Profile profile;
+    @Column(name = "color")
+    public String color;
 }

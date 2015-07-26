@@ -1,5 +1,7 @@
 package eu.giovannidefranceso.effectivenotes.adapters;
 
+import android.content.Context;
+import android.support.annotation.ArrayRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -7,20 +9,22 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.Locale;
 
 import eu.giovannidefranceso.effectivenotes.R;
+import eu.giovannidefranceso.effectivenotes.fragments.BoardFragment;
 
 /**
  * Created by jibbo on 26/07/15.
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    private String[] mTitles;
 
-    public SectionsPagerAdapter(FragmentManager fm) {
+    public SectionsPagerAdapter(Context ctx, @ArrayRes int titles, FragmentManager fm) {
         super(fm);
+        mTitles = ctx.getResources().getStringArray(titles);
     }
 
     @Override
     public Fragment getItem(int position) {
-        //TODO
-        return new Fragment();
+        return new BoardFragment();
     }
 
     @Override
@@ -32,7 +36,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        //TODO
-        return ""+position;
+        return mTitles[position];
     }
 }
