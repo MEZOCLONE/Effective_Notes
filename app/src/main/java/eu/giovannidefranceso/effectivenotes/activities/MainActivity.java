@@ -3,6 +3,7 @@ package eu.giovannidefranceso.effectivenotes.activities;
 import java.util.Locale;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -80,13 +81,9 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.fabBtn)
     public void clickedFAB() {
         String type = mTabLayout.getTabAt(mViewPager.getCurrentItem()).getText().toString();
-        Profile p = new Profile("Personal");
-        p.save();
-        Note n = new Note("titolo", "contenuto", p, "#1abc9c", type);
-        n.save();
-        BoardFragment bf = (BoardFragment) ((SectionsPagerAdapter) mViewPager.getAdapter())
-                .getFragment(mViewPager.getCurrentItem());
-        bf.refresh();
+        Intent i = new Intent(this,AddNoteActivity.class);
+        i.putExtra(AddNoteActivity.KEY_TYPE,type);
+        startActivity(i);
     }
 
 }

@@ -9,7 +9,7 @@ import com.activeandroid.annotation.Table;
  */
 @Table(name = "Profile")
 public class Profile extends Model {
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     public String name;
 
     public Profile() {}
