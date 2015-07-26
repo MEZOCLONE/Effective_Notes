@@ -3,10 +3,20 @@
     package="eu.giovannidefranceso.effectivenotes" >
 
     <application
+        android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <meta-data android:name="AA_DB_NAME" android:value="effectiveNotes.db" />
+        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="eu.giovannidefrancesco.effectivenotes.model.Profile,
+            eu.giovannidefrancesco.effectivenotes.model.Note,
+             eu.giovannidefrancesco.effectivenotes.model.NotesProfiles" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
