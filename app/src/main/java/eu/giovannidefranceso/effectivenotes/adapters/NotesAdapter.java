@@ -51,6 +51,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         return mNotes.size();
     }
 
+    public void refresh(List<Note> notes) {
+        mNotes=notes;
+        notifyDataSetChanged();
+    }
+
     public class NotesHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.note_title)
         public TextView noteTitle;

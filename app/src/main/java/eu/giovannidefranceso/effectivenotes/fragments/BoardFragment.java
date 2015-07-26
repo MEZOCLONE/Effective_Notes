@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.activeandroid.query.Select;
+
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -69,13 +70,10 @@ public class BoardFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (mNotes == null) {
-            if (mTitle != null) {
-                mNotes = new Select().from(Note.class).where("type=? ", mTitle).execute();
-            }
-        }
         if (mNotes != null) {
             mRecyclerView.setAdapter(new NotesAdapter(mNotes));
+        } else {
+            refresh();
         }
     }
 
@@ -85,5 +83,16 @@ public class BoardFragment extends Fragment {
         BoardFragment fragment = new BoardFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void refresh() {
+        if (mTitle != null) {
+            mNotes = new Select().from(Note.class).where("type=? ", mTitle).execute();
+        }
+        if (mRecyclerView.getAdapter() != null) {
+            ((NotesAdapter) mRecyclerView.getAdapter()).refresh(mNotes);
+        } else {
+            mRecyclerView.setAdapter(new NotesAdapter(mNotes));
+        }
     }
 }

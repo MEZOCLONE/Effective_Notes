@@ -28,9 +28,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import eu.giovannidefranceso.effectivenotes.R;
 import eu.giovannidefranceso.effectivenotes.adapters.SectionsPagerAdapter;
+import eu.giovannidefranceso.effectivenotes.fragments.BoardFragment;
 import eu.giovannidefranceso.effectivenotes.model.Note;
+import eu.giovannidefranceso.effectivenotes.model.Profile;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.pager)
     ViewPager mViewPager;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity{
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
-        mViewPager.setAdapter(new SectionsPagerAdapter(this,R.array.sections,
+        mViewPager.setAdapter(new SectionsPagerAdapter(this, R.array.sections,
                 getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -76,7 +78,15 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @OnClick(R.id.fabBtn)
-    public void clickedFAB(){
+    public void clickedFAB() {
+        String type = mTabLayout.getTabAt(mViewPager.getCurrentItem()).getText().toString();
+        Profile p = new Profile("Personal");
+        p.save();
+        Note n = new Note("titolo", "contenuto", p, "#1abc9c", type);
+        n.save();
+        BoardFragment bf = (BoardFragment) ((SectionsPagerAdapter) mViewPager.getAdapter())
+                .getFragment(mViewPager.getCurrentItem());
+        bf.refresh();
     }
 
 }
