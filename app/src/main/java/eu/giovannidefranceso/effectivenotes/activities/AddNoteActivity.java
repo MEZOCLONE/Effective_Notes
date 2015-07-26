@@ -35,8 +35,8 @@ public class AddNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
-        setSupportActionBar(mToolbar);
         ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
         if(savedInstanceState!=null && savedInstanceState.containsKey(KEY_TYPE)){
             mType=savedInstanceState.getString(KEY_TYPE);
         }else if(getIntent().getExtras().containsKey(KEY_TYPE)){
