@@ -40,9 +40,6 @@ public class BoardFragment extends Fragment {
             if (savedInstanceState.containsKey(KEY_TITLE)) {
                 mTitle = savedInstanceState.getString(KEY_TITLE);
             }
-            if (savedInstanceState.containsKey(KEY_NOTES)) {
-                mNotes = Parcels.unwrap(savedInstanceState.getParcelable(KEY_NOTES));
-            }
         } else if (getArguments() != null && getArguments().containsKey(KEY_TITLE)) {
             mTitle = getArguments().getString(KEY_TITLE);
         }
@@ -60,9 +57,6 @@ public class BoardFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         if (mTitle != null) {
             outState.putString(KEY_TITLE, mTitle);
-        }
-        if (mNotes != null) {
-            outState.putParcelable(KEY_NOTES, Parcels.wrap(mNotes));
         }
         super.onSaveInstanceState(outState);
     }
@@ -92,7 +86,7 @@ public class BoardFragment extends Fragment {
     public void refresh() {
         if (mTitle != null) {
             //TODO add profiles
-            mNotes = new Select().from(Note.class).where("type=? ", mTitle).execute();
+            mNotes = new Select().from(Note.class).where("type=?", mTitle).execute();
         }
         if (mRecyclerView.getAdapter() != null) {
             ((NotesAdapter) mRecyclerView.getAdapter()).refresh(mNotes);

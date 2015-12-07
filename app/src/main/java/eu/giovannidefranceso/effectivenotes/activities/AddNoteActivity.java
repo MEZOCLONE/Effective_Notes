@@ -9,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 
+import com.activeandroid.query.Select;
+
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,35 +35,42 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
         ButterKnife.bind(this);
-        if(savedInstanceState!=null && savedInstanceState.containsKey(Note.TYPE_KEY)){
-            mType=savedInstanceState.getString(Note.TYPE_KEY);
-        }else if(getIntent().getExtras().containsKey(Note.TYPE_KEY)){
-            mType=getIntent().getStringExtra(Note.TYPE_KEY);
+        if (savedInstanceState != null && savedInstanceState.containsKey(Note.TYPE_KEY)) {
+            mType = savedInstanceState.getString(Note.TYPE_KEY);
+        } else if (getIntent().getExtras().containsKey(Note.TYPE_KEY)) {
+            mType = getIntent().getStringExtra(Note.TYPE_KEY);
         }
-        mContent.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/HandTest.ttf"));
-        if(Build.VERSION.SDK_INT>=21) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(),R.color.yellow));
+        mContent.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/HandTest.ttf"));
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if(mType!=null){
-            outState.putString(Note.TYPE_KEY,mType);
+        if (mType != null) {
+            outState.putString(Note.TYPE_KEY, mType);
         }
         super.onSaveInstanceState(outState);
     }
 
     @OnClick(R.id.fabBtn)
-    public void clickedFAB(){
+    public void clickedFAB() {
         saveNote();
         finish();
     }
 
-    private void saveNote(){
+    private void saveNote() {
         //TODO add profiles support
-        Profile p = new Profile("Personal");
-        p.save();
+        List tmp = new Select().from(Profile.class).where("name=?", "Personal").execute();
+        Profile p;
+        if (tmp == null || tmp.size() == 0) {
+            p = new Profile("Personal");
+            //TODO this is an hotfix for the first profile.
+            p.save();
+        } else {
+            p = (Profile) tmp.get(0);
+        }
         //TODO Add color support;
         Note n = new Note(mContent.getText().toString(), p, "#ffcc11", mType);
         n.save();
