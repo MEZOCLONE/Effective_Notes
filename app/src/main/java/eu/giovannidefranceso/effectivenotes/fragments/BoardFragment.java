@@ -72,9 +72,13 @@ public class BoardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (mNotes != null) {
             mRecyclerView.setAdapter(new NotesAdapter(mNotes));
-        } else {
-            refresh();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
     }
 
     public static BoardFragment newInstance(String title) {
@@ -87,6 +91,7 @@ public class BoardFragment extends Fragment {
 
     public void refresh() {
         if (mTitle != null) {
+            //TODO add profiles
             mNotes = new Select().from(Note.class).where("type=? ", mTitle).execute();
         }
         if (mRecyclerView.getAdapter() != null) {

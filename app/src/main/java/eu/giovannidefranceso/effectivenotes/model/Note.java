@@ -11,11 +11,12 @@ import org.parceler.Parcel;
 /**
  * Created by jibbo on 26/07/15.
  */
-@Parcel
+
 @Table(name = "Note")
 public class Note extends Model {
-    @Column(name = "title")
-    public String title;
+
+    public final static String TYPE_KEY="type";
+
     @Column(name = "content")
     public String content;
     @Column(name = "profile")
@@ -30,8 +31,7 @@ public class Note extends Model {
         this.profile= new Profile("Personal");
     }
 
-    public Note(String title, String content,@Nullable Profile profile, String color, String type) {
-        this.title = title;
+    public Note(String content,@Nullable Profile profile, String color, String type) {
         this.content = content;
         if(profile==null){
             this.profile= new Profile("Personal");
@@ -42,13 +42,6 @@ public class Note extends Model {
         this.type = type;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getContent() {
         return content;

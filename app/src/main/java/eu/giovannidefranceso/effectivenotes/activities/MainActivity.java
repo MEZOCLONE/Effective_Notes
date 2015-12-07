@@ -4,8 +4,11 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -53,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
 
+        if(Build.VERSION.SDK_INT>=21) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.darker_purple));
+        }
     }
 
 
@@ -82,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     public void clickedFAB() {
         String type = mTabLayout.getTabAt(mViewPager.getCurrentItem()).getText().toString();
         Intent i = new Intent(this,AddNoteActivity.class);
-        i.putExtra(AddNoteActivity.KEY_TYPE,type);
+        i.putExtra(Note.TYPE_KEY,type);
         startActivity(i);
     }
 

@@ -6,8 +6,8 @@
     <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/dark_purple</item>
         <item name="colorPrimaryDark">@color/darker_purple</item>
-        <item name="colorAccent">@color/pink</item>
-        <item name="colorControlHighlight">@color/light_pink</item>
+        <item name="colorAccent">@color/red_highlight</item>
+        <item name="colorControlHighlight">@color/light_red_highlight</item>
     </style>
 
 </resources>

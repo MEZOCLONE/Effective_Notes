@@ -1,6 +1,7 @@
 package eu.giovannidefranceso.effectivenotes.adapters;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,16 +32,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_note, viewGroup, false);
         // set the view's size, margins, paddings and layout parameters
         NotesHolder nh = new NotesHolder(v);
+        nh.noteTitle.setTypeface(Typeface.createFromAsset(viewGroup.getContext().getAssets(), "fonts/HandTest.ttf"));
         return nh;
     }
 
     @Override
     public void onBindViewHolder(NotesHolder notesHolder, int position) {
         final Note n = mNotes.get(position);
-        notesHolder.noteTitle.setText(n.title);
-        if(n.color!=null) {
+        notesHolder.noteTitle.setText(n.content);
+        if (n.color != null) {
             notesHolder.noteTitle.setBackgroundColor(Color.parseColor(n.color));
         }
+
     }
 
     @Override
@@ -52,7 +55,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
     }
 
     public void refresh(List<Note> notes) {
-        mNotes=notes;
+        mNotes = notes;
         notifyDataSetChanged();
     }
 

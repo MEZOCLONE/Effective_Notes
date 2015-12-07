@@ -3,7 +3,7 @@
     <string-array name="sections">
         <item>Do</item>
         <item>Plan</item>
-        <item>Delegate</item>
+        <item>Give</item>
         <item>Drop</item>
     </string-array>
 </resources>
