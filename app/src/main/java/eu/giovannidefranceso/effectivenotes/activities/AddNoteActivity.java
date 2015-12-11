@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 
 import com.activeandroid.query.Select;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import eu.giovannidefranceso.effectivenotes.R;
+import eu.giovannidefranceso.effectivenotes.model.BackPressed;
+import eu.giovannidefranceso.effectivenotes.model.EffectiveNotesApplication;
 import eu.giovannidefranceso.effectivenotes.model.Note;
 import eu.giovannidefranceso.effectivenotes.model.Profile;
 
@@ -47,12 +50,19 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        clickedFAB();
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (mType != null) {
             outState.putString(Note.TYPE_KEY, mType);
         }
         super.onSaveInstanceState(outState);
     }
+
 
     @OnClick(R.id.fabBtn)
     public void clickedFAB() {
@@ -61,18 +71,21 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
-        //TODO add profiles support
-        List tmp = new Select().from(Profile.class).where("name=?", "Personal").execute();
-        Profile p;
-        if (tmp == null || tmp.size() == 0) {
-            p = new Profile("Personal");
-            //TODO this is an hotfix for the first profile.
-            p.save();
-        } else {
-            p = (Profile) tmp.get(0);
+        if(mContent.getText().toString().trim().length()>0) {
+            //TODO add profiles support
+            List tmp = new Select().from(Profile.class).where("name=?", "Personal").execute();
+            Profile p;
+            if (tmp == null || tmp.size() == 0) {
+                p = new Profile("Personal");
+                //TODO this is an hotfix for the first profile.
+                p.save();
+            } else {
+                p = (Profile) tmp.get(0);
+            }
+            //TODO Add color support;
+
+            Note n = new Note(mContent.getText().toString(), p, "#ffcc11", mType);
+            n.save();
         }
-        //TODO Add color support;
-        Note n = new Note(mContent.getText().toString(), p, "#ffcc11", mType);
-        n.save();
     }
 }

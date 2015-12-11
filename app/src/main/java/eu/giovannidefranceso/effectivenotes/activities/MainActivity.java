@@ -33,6 +33,8 @@ import butterknife.OnClick;
 import eu.giovannidefranceso.effectivenotes.R;
 import eu.giovannidefranceso.effectivenotes.adapters.SectionsPagerAdapter;
 import eu.giovannidefranceso.effectivenotes.fragments.BoardFragment;
+import eu.giovannidefranceso.effectivenotes.model.BackPressed;
+import eu.giovannidefranceso.effectivenotes.model.EffectiveNotesApplication;
 import eu.giovannidefranceso.effectivenotes.model.Note;
 import eu.giovannidefranceso.effectivenotes.model.Profile;
 
@@ -61,6 +63,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EffectiveNotesApplication.eventBus.register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EffectiveNotesApplication.eventBus.unregister(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        EffectiveNotesApplication.eventBus.post(new BackPressed());
     }
 
     @OnClick(R.id.fabBtn)
