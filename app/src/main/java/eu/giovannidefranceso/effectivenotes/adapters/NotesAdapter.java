@@ -1,5 +1,6 @@
 package eu.giovannidefranceso.effectivenotes.adapters;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -8,11 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import eu.giovannidefranceso.effectivenotes.R;
+import eu.giovannidefranceso.effectivenotes.activities.EditNoteActivity;
 import eu.giovannidefranceso.effectivenotes.model.Note;
 
 /**
@@ -43,7 +48,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         if (n.color != null) {
             notesHolder.noteTitle.setBackgroundColor(Color.parseColor(n.color));
         }
-
+        notesHolder.noteTitle.setTag(n);
     }
 
     @Override
@@ -66,6 +71,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         public NotesHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick(R.id.note_title)
+        public void onClick(View v){
+            Intent editNote = new Intent(v.getContext(), EditNoteActivity.class);
+            editNote.putExtra(EditNoteActivity.NOTE_KEY, Parcels.wrap(((Note)v.getTag()).toParcelableNote()));
+            v.getContext().startActivity(editNote);
         }
     }
 }

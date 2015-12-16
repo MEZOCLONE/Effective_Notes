@@ -70,7 +70,7 @@ public class AddNoteActivity extends AppCompatActivity {
         finish();
     }
 
-    private void saveNote() {
+    protected void saveNote() {
         if(mContent.getText().toString().trim().length()>0) {
             //TODO add profiles support
             List tmp = new Select().from(Profile.class).where("name=?", "Personal").execute();

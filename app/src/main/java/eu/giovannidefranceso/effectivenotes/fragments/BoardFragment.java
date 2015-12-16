@@ -1,6 +1,5 @@
 package eu.giovannidefranceso.effectivenotes.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.activeandroid.query.Select;
-import com.squareup.otto.Subscribe;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -19,8 +15,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import eu.giovannidefranceso.effectivenotes.R;
 import eu.giovannidefranceso.effectivenotes.adapters.NotesAdapter;
-import eu.giovannidefranceso.effectivenotes.model.BackPressed;
-import eu.giovannidefranceso.effectivenotes.model.EffectiveNotesApplication;
 import eu.giovannidefranceso.effectivenotes.model.Note;
 
 /**
