@@ -33,6 +33,9 @@ public class AddNoteActivity extends AppCompatActivity {
     @Bind(R.id.content)
     EditText mContent;
 
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,8 @@ public class AddNoteActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
         }
+
+        prepareToolbar();
     }
 
     @Override
@@ -70,8 +75,15 @@ public class AddNoteActivity extends AppCompatActivity {
         finish();
     }
 
+    private void prepareToolbar() {
+        mToolbar.inflateMenu(R.menu.menu_note);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     protected void saveNote() {
-        if(mContent.getText().toString().trim().length()>0) {
+        if (mContent.getText().toString().trim().length() > 0) {
             //TODO add profiles support
             List tmp = new Select().from(Profile.class).where("name=?", "Personal").execute();
             Profile p;

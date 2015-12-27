@@ -47,12 +47,15 @@
             android:id="@+id/fabBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:layout_marginBottom="@dimen/medium_margin"
             android:layout_marginRight="@dimen/medium_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
             app:borderWidth="0dp"
             android:src="@drawable/ic_create"
-            app:fabSize="normal"/>
+            app:fabSize="normal"
+            app:layout_anchor="@id/pager"
+            app:layout_anchorGravity="bottom|right|end"/>
 
     </android.support.design.widget.CoordinatorLayout>
 

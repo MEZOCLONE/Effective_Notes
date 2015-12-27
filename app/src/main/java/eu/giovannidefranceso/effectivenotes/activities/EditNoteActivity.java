@@ -1,17 +1,15 @@
 package eu.giovannidefranceso.effectivenotes.activities;
 
 import android.os.Bundle;
-
-import com.activeandroid.query.Select;
+import android.support.v7.widget.Toolbar;
 
 import org.parceler.Parcels;
 
-import java.lang.ref.WeakReference;
-import java.util.List;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import eu.giovannidefranceso.effectivenotes.R;
 import eu.giovannidefranceso.effectivenotes.model.Note;
 import eu.giovannidefranceso.effectivenotes.model.ParcelableNote;
-import eu.giovannidefranceso.effectivenotes.model.Profile;
 
 /**
  * Created by jibbo on 16/12/15.
@@ -22,6 +20,8 @@ public class EditNoteActivity extends AddNoteActivity {
 
     private ParcelableNote mNote;
     private static Note note;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +32,9 @@ public class EditNoteActivity extends AddNoteActivity {
             mNote = Parcels.unwrap(getIntent().getParcelableExtra(NOTE_KEY));
         }
 
+
         refresh();
     }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -48,6 +48,8 @@ public class EditNoteActivity extends AddNoteActivity {
         note.content=mContent.getText().toString();
         note.save();
     }
+
+
 
     private void refresh() {
         //TODO add color support
